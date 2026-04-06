@@ -5,6 +5,8 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPanel />} />
+          path('login/', TemplateView.as_view(template_name="index.html")),
+
     </Routes>
   );
 }
