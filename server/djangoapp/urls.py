@@ -25,5 +25,6 @@ path(route='add_review', view=views.add_review, name='add_review'),
 
 path('dealers/', TemplateView.as_view(template_name="index.html")),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
