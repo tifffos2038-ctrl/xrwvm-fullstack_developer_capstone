@@ -1,25 +1,16 @@
-    FROM python:3.12.0-slim-bookworm
+    FROM node:18.12.1-bullseye-slim
 
-    ENV PYTHONBUFFERED 1
-    ENV PYTHONWRITEBYTECODE 1
+RUN npm install -g npm@9.1.3
 
-    ENV APP=/app
+ADD package.json .
+ADD app.js .
+ADD review.js .
+ADD dealership.js .
+ADD data/dealerships.json .
+ADD data/reviews.json .
+COPY . .
+RUN npm install
 
-    # Change the workdir.
-    WORKDIR $APP
+EXPOSE 3030
 
-    # Install the requirements
-    COPY requirements.txt $APP
-
-    RUN pip3 install -r requirements.txt
-
-    # Copy the rest of the files
-    COPY . $APP
-
-    EXPOSE 8000
-
-    RUN chmod +x /app/entrypoint.sh
-
-    ENTRYPOINT ["/bin/bash","/app/entrypoint.sh"]
-
-    CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "djangoproj.wsgi"]
+CMD [ "node", "app.js" ]
